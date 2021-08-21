@@ -5,11 +5,10 @@ using namespace std;
 
 void FillRand(int arr[], const int);
 void Print(int arr[], const int);
-//void PushBack(int arr[], int n);
 
-//#define Push_Back
-//#define Insert
-#define Push_Front
+int* PushBack(int arr[], int& n,int value);//добавл€ет значение в конец массива
+int* PushFront(int arr[], int& n, int value);
+int* PopBack(int arr[], int& n);
 
 //ѕриветствую ќлег,—пасибо за видео,от части немного пон€тно.но все же не смог сделать домашку.
 //ћысли есть но реализовать не совсем понимаю как в виде кода.ѕопыталс€ не в функци€х написать.по индексам записать значение пон€тно,как в конец записать тоже пон€тно,а в начало массива ведь можно только через индекс?
@@ -25,11 +24,31 @@ void main()
 	int* arr = new int[n] {};
 	FillRand(arr, n);
 	Print(arr, n);
-    //PushBack(arr, n);
-	//int value;
-	//cout << "введите добавленное значение:"; cin >> value;
+	//arr[n] = 123;
+	//n++;
+    arr=PushBack(arr, n,1024);
+	
+	Print(arr, n);
 
-#ifdef Push_Back
+	arr = PushFront(arr, n, 2048);
+	Print(arr, n);
+	arr = PopBack(arr, n);
+	Print(arr, n);
+	delete[] arr;
+}
+
+int* PopBack(int arr[], int& n)
+{
+	int* buffer = new int[--n]{};
+	for (int i = 0; i < n; i++)
+	{
+		buffer[i] = arr[i];
+	}
+	delete[] arr;
+	return buffer;
+}
+int* PushBack(int arr[], int& n, int value)
+{
 	//1)—оздаем бу‘ерный массив нужного размера.
 	int* buffer = new int[n + 1]{};
 	//2)копируем все значени€ из исходного массива в буферный
@@ -43,42 +62,31 @@ void main()
 	arr = buffer;
 	//5)» только после всего этого можно записать новое значение в конец массива:
 	arr[n] = value;
+	//6)после добавлени€ элемента в конец массива,кол-во его эллементов увеличиваетс€ на 1.
 	n++;
-#endif
-
-#ifdef Insert
-	int* buffer = new int[n + 1]{};
-	for (int i = 0; i < n; i++)
-	{
-		buffer[i] = arr[i];
-	}
-	delete[] arr;
-	arr = buffer;
-	arr[3] = value;//¬ставл€ет значение в массив по индексу,при замене индекса определ€ем в какую €чейку массиву запишем значение.
-	n++;
-#endif
-
-#ifdef Push_Front
-	int value;
-	cout << "введите добавленное значение:"; cin >> value;
-	for (int i = n; i > 0; i--)
-	{
-		arr[0]=value;
-	}
-#endif
-
-	Print(arr, n);
-	delete[] arr;
+	return arr;
 }
 
-void FillRand(int arr[], const int n)
+int* PushFront(int arr[], int& n, int value)
 {
-	for (int i = 0; i < n; i++)
+	//1)—оздаем бу‘ерный массив нужного размера.
+	int* buffer = new int[n+1]{};
+	//2)копируем все значени€ из исходного массива в буферный
+	for (int i = 0; i <n; i++)
 	{
-		arr[i] = rand() % 100;
+		buffer[i+1] = arr[i];
 	}
-	cout << endl;
+	//3)ѕосле того как данные были скопированы,исходный массив можно удалить можно.
+	delete[] arr;
+	//4)ѕодмен€ем адресс в указателе на исходный массив:
+	arr = buffer;
+	//5)» только после всего этого можно записать новое значение в конец массива:
+	arr[0] = value;
+	//6)после добавлени€ элемента в конец массива,кол-во его эллементов увеличиваетс€ на 1.
+	n++;
+	return arr;
 }
+
 void Print(int arr[], const int n)
 {
 	for (int i = 0; i < n; i++)
@@ -87,23 +95,11 @@ void Print(int arr[], const int n)
 	}
 	cout << endl;
 }
-
-/*void PushBack(int arr[], int n)
+void FillRand(int arr[], const int n)
 {
-	int value;
-	cout << "введите добавленное значение:"; cin >> value;
-	//1)—оздаем бу‘ерный массив нужного размера.
-	int* buffer = new int[n + 1] {};
-	//2)копируем все значени€ из исходного массива в буферный
 	for (int i = 0; i < n; i++)
 	{
-		buffer[i] = arr[i];
+		arr[i]=rand()%100;
 	}
-	//3)ѕосле того как данные были скопированы,исходный массив можно удалить можно.
-	delete[] arr;
-	//4)ѕодмен€ем адресс в указателе на исходный массив:
-	arr = buffer;
-	//5)» только после всего этого можно записать новое значение в конец массива:
-	arr[n] = value;
-	n++;
-}*/
+}
+
