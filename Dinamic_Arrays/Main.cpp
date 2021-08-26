@@ -3,19 +3,30 @@ using namespace std;
 
 #define Tab "\t";
 
-void FillRand(int arr[], const int);
-void Print(int arr[], const int);
+template<typename T>
+void FillRand(T arr[], const int);
 
-int* PushBack(int arr[], int& n,int value);//добавляет значение в конец массива
-int* PushFront(int arr[], int& n, int value);
-int* PopBack(int arr[], int& n);
+template<typename T>
+void Print(T arr[], const int);
 
-//Приветствую Олег,Спасибо за видео,от части немного понятно.но все же не смог сделать домашку.
-//Мысли есть но реализовать не совсем понимаю как в виде кода.Попытался не в функциях написать.по индексам записать значение понятно,как в конец записать тоже понятно,а в начало массива ведь можно только через индекс?
-//А удаление значение массива я думаю реализуем спомощью удаления выделенной памяти?Ибо оператор delete может удалить только указатель но не отдельное звено массива.
-//Буду ждать занятия ,мне инетересно все таки решение и разобраться в этом...
-//P.S.
-//В 64 битной системе макс объем памяти можно проадрессовать 4Эксобайт памяти.
+template<typename T>
+T* PushBack(T arr[], T& n,T value);//добавляет значение в конец массива
+
+template<typename T>
+T* PushFront(T arr[], T& n, T value);
+
+template<typename T>
+T* PopBack(T arr[], T& n);
+
+template<typename T>
+T* PopFront(T arr[], T& n);
+
+template<typename T>
+T* Insert(T arr[], T& n, const int index, T value);
+
+template<typename T>
+T* Erase(T arr[], T& n, const int index);
+
 void main()
 {
 	setlocale(LC_ALL, "Russian");
@@ -24,22 +35,31 @@ void main()
 	int* arr = new int[n] {};
 	FillRand(arr, n);
 	Print(arr, n);
-	//arr[n] = 123;
-	//n++;
-    arr=PushBack(arr, n,1024);
-	
+
+   arr = PushBack(arr, n, 1024);
 	Print(arr, n);
 
 	arr = PushFront(arr, n, 2048);
 	Print(arr, n);
+
 	arr = PopBack(arr, n);
+	Print(arr, n);
+
+	arr = PopFront(arr, n);
+	Print(arr, n);
+
+	arr = Insert(arr, n, 3, 4096);
+	Print(arr, n);
+
+	arr = Erase(arr, n, 3);
 	Print(arr, n);
 	delete[] arr;
 }
 
-int* PopBack(int arr[], int& n)
+template<typename T>
+T* PopBack(T arr[], T& n)
 {
-	int* buffer = new int[--n]{};
+	T* buffer = new int[--n]{};
 	for (int i = 0; i < n; i++)
 	{
 		buffer[i] = arr[i];
@@ -47,16 +67,30 @@ int* PopBack(int arr[], int& n)
 	delete[] arr;
 	return buffer;
 }
-int* PushBack(int arr[], int& n, int value)
+
+template<typename T>
+T* PopFront(T arr[], T& n)
+{
+	T* buffer = new int[--n]{};
+	for (int i = 0; i < n; i++)
+	{
+		buffer[i-1] = arr[i];
+	}
+	delete[] arr;
+	return buffer;
+}
+
+template<typename T>
+T* PushBack(T arr[], T& n, T value)
 {
 	//1)Создаем буФерный массив нужного размера.
-	int* buffer = new int[n + 1]{};
+	T* buffer = new int[n + 1]{};
 	//2)копируем все значения из исходного массива в буферный
 	for (int i = 0; i < n; i++)
 	{
 		buffer[i] = arr[i];
 	}
-	//3)После того как данные были скопированы,исходный массив можно удалить можно.
+	//3)После того как данные были скопированы,исходный массив можно удалить.
 	delete[] arr;
 	//4)Подменяем адресс в указателе на исходный массив:
 	arr = buffer;
@@ -67,10 +101,11 @@ int* PushBack(int arr[], int& n, int value)
 	return arr;
 }
 
-int* PushFront(int arr[], int& n, int value)
+template<typename T>
+T* PushFront(T arr[], T& n, T value)
 {
 	//1)Создаем буФерный массив нужного размера.
-	int* buffer = new int[n+1]{};
+	T* buffer = new int[n+1]{};
 	//2)копируем все значения из исходного массива в буферный
 	for (int i = 0; i <n; i++)
 	{
@@ -86,8 +121,38 @@ int* PushFront(int arr[], int& n, int value)
 	n++;
 	return arr;
 }
+template<typename T>
+T* Insert(T arr[], T& n, const int index, T value)
+{
+	for (int i = 0; i < index; i++)
+	{
+		for (int j = index; j < n; j++)
+		{
+			arr[j + 1] = arr[j];
+		}
+		arr[i] = arr[i];
+	}
+	arr[index] = value;
+	return arr;
+}
 
-void Print(int arr[], const int n)
+template<typename T>
+T* Erase(T arr[], T& n, const int index)
+{
+	for (int i = 0; i < index; i++)
+	{
+		arr[i]=arr[i];
+	}
+	for (int j = index; j < n; j++)
+	{
+		arr[j - 1] = arr[j];
+	}
+	return arr;
+
+}
+
+template<typename T>
+void Print(T arr[], const int n)
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -95,7 +160,9 @@ void Print(int arr[], const int n)
 	}
 	cout << endl;
 }
-void FillRand(int arr[], const int n)
+
+template<typename T>
+void FillRand(T arr[], const int n)
 {
 	for (int i = 0; i < n; i++)
 	{
