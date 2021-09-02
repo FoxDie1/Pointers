@@ -139,7 +139,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="fillrand.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="print.cpp" />
+    <ClCompile Include="statistics.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="fillrand.h" />
+    <ClInclude Include="print.h" />
+    <ClInclude Include="statistics.h" />
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

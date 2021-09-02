@@ -25,10 +25,10 @@ T* PopFront(T arr[], T& n)
 }
 
 template<typename T>
-T* PushBack(T arr[],T& n, T value)
+T* PushBack(T arr[], T& n, T value)
 {
 	//1)—оздаем бу‘ерный массив нужного размера.
-	T* buffer = new int[n +1]{};
+	T* buffer = new int[n + 1]{};
 	//2)копируем все значени€ из исходного массива в буферный
 	for (int i = 0; i < n; i++)
 	{
@@ -94,3 +94,4 @@ T* Erase(T arr[], T& n, const int index)
 	return arr;
 
 }
+

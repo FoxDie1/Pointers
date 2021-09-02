@@ -1,6 +1,7 @@
-#include "FillRand.h"
+#include "fillrand.h"
 
-template<typename T>void FillRand(T arr[], const int n)
+template<typename T>
+void FillRand(T arr[], const int n)
 {
 	for (int i = 0; i < n; i++)
 	{

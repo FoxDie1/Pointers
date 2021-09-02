@@ -1,7 +1,8 @@
 #pragma once
-#include "Statistics.h"
+#include "stdafx.h"
+
 template<typename T>
-T* PushBack(T arr[],T& n, T value);//добавляет значение в конец массива
+T* PushBack(T arr[], T& n, T value);//добавляет значение в конец массива
 
 template<typename T>
 T* PushFront(T arr[], T& n, T value);
